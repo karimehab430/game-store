@@ -1,0 +1,6 @@
+.flicking-arrow-prev::before,
+.flicking-arrow-prev::after,
+.flicking-arrow-next::before,
+.flicking-arrow-next::after{   
+     background-color: white;
+}

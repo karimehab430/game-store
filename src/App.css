@@ -1,5 +1,10 @@
+.flicking-arrow-prev.is-thin::before,
+.flicking-arrow-next.is-thin::before {
+  color: white;
+}
 .App {
   text-align: center;
+  background-color: rgb(17 24 39);
 }
 
 .App-logo {
