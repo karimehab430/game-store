@@ -37,10 +37,7 @@ const Search = ({ isExpanded, onSearchIconClick, onSearchClose }) => {
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <rect
-              width="48"
-              height="48"
-            ></rect>
+            <rect width="48" height="48"></rect>
             <path
               d="M14 14L34 34"
               stroke="white"
@@ -103,9 +100,8 @@ const Search = ({ isExpanded, onSearchIconClick, onSearchClose }) => {
                           <div>
                             <h3 className="font-semibold">
                               {game.name}{" "}
-                              {"("}
-                              {game.released.split("-")[0]}
-                              {")"}
+                              {game.released &&
+                                "(" + game.released.split("-")[0] + ")"}
                             </h3>
                             <div className="text-neutral-500 flex flex-row  ">
                               {game.genres

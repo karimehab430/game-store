@@ -50,18 +50,21 @@ const GamePage = () => {
   const dispatch = useDispatch();
   const [buttonText, setButtonText] = useState(" Add to Favorites");
 
-  const isFavorite = games.find((item) => item.id === game.id);
+  const isFavorite = game && games.find((item) => item.id === game.id);
 
   const handleFavorites = (e) => {
     e.preventDefault();
-    if (!isFavorite) {
-      dispatch(add(game));
-      setButtonText(" Remove from Favorites");
-    } else {
-      dispatch(remove(game));
-      setButtonText(" Add to Favorites");
+    if (game) {
+      if (!isFavorite) {
+        dispatch(add(game));
+        setButtonText(" Remove from Favorites");
+      } else {
+        dispatch(remove(game));
+        setButtonText(" Add to Favorites");
+      }
     }
   };
+  
   useEffect(() => {
     isFavorite
       ? setButtonText(" Remove from Favorites")
@@ -82,7 +85,7 @@ const GamePage = () => {
       .then((response) => response.json())
       .then((data) => setScreenshots(data))
       .catch((error) => console.error(error));
-  }, []);
+  }, [params.id]);
 
   if (!game) {
     return <div>Loading...</div>;
@@ -118,7 +121,7 @@ const GamePage = () => {
               return (
                 <div key={screenshot.id} className="mx-2 mb-5">
                   <img
-                    className="lg:w-[1024px] lg:h-[600px] sm:w-[500px] sm:h-[320px]"
+                    className="lg:w-[1024px] lg:h-[600px] w-[360px] h-[200px]"
                     src={screenshot.image}
                     alt=""
                   />
@@ -159,8 +162,8 @@ const GamePage = () => {
                 </button>
               </div>
             </div>
-            <p className="text-xl text-gray-300/25 font-bold mb-5 flex flex-start">
-              {esrb_rating.name}
+            <p className="text-xl text-gray-300/25 font-bold mb-5 flex">
+              {esrb_rating && esrb_rating.name}
             </p>
             {metacritic && (
               <>
@@ -273,7 +276,7 @@ const GamePage = () => {
               <div className="flex justify-center	">
                 {ratings.map((rating) => (
                   <div key={rating.id} className="mb-3 mr-5">
-                    <div style={{ width: "200", height: "100" }}>
+                    <div>
                       <CircularProgressbarWithChildren
                         value={rating.percent}
                         strokeWidth={2}

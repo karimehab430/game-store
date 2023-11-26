@@ -1,22 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  value: [],
-};
-
-export const favoriteSlice = createSlice({
+const favoritesSlice = createSlice({
   name: "favorites",
-  initialState,
+  initialState: {
+    value: JSON.parse(localStorage.getItem("favorites")) || [],
+  },
   reducers: {
     add: (state, action) => {
       state.value.push(action.payload);
+      localStorage.setItem("favorites", JSON.stringify(state.value));
     },
     remove: (state, action) => {
-      const idx = state.value.findIndex((ele) => ele.id === action.payload.id);
-      state.value.splice(idx, 1);
+      state.value = state.value.filter((game) => game.id !== action.payload.id);
+      localStorage.setItem("favorites", JSON.stringify(state.value));
     },
   },
 });
 
-export const { add, remove } = favoriteSlice.actions;
-export default favoriteSlice.reducer;
+export const { add, remove } = favoritesSlice.actions;
+export default favoritesSlice.reducer;

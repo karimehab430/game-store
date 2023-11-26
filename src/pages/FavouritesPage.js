@@ -14,7 +14,11 @@ const FavouritesPage = () => {
   } else {
     return (
       <div className="h-screen mt-5">
-        <div className="flex flex-wrap justify-center gap-10">
+        <h1 className=" mx-3 text-3xl font-semibold mb-2 text-white flex pb-2">
+            Favorites
+          </h1>
+          <hr className=" border-neutral-400 border-[1px] " />
+        <div className="flex flex-wrap justify-center gap-10 my-5">
           {games.map((game) => {
             return <Carddd key={game.id} game={game} />;
           })}
