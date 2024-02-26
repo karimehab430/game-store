@@ -28,11 +28,10 @@ const Carousel = () => {
 
   useEffect(() => {
     fetch(
-      `https://api.rawg.io/api/games?key=2705c59b51ea4036bf6f6bed038c95ee&dates=${formattedSixMonthsAgo},${formattedToday}&page_size=5&metacritic=80,100&ordering=-metacritic`
+      `https://api.rawg.io/api/games?key=17bbcccaf5c34efb8a9e96f0b767c795&dates=${formattedSixMonthsAgo},${formattedToday}&page_size=5&metacritic=80,100&ordering=-metacritic`
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setCarouselData(data.results);
       })
       .catch((error) => {
@@ -41,13 +40,14 @@ const Carousel = () => {
   }, []);
 
   return (
-    <div className="relative flex justify-center">
+    <div className="relative flex justify-center z-5 pt-20">
       <Flicking
         align="center"
         defaultIndex={0}
         circular={true}
         plugins={plugins}
         inputType={["touch", "mouse"]}
+        duration={1000}
       >
         {carouselData.length > 0 &&
           carouselData.map((item) => (

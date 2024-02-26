@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Carddd from "./card";
 import Carousel from "./carousel";
+import { GiFlame } from "react-icons/gi";
 
 const today = new Date();
 const sixMonthsAgo = new Date();
@@ -28,7 +29,7 @@ const Home = () => {
   const [acclaimedGames, setAcclaimedGames] = useState([]);
   const [upcomingGames, setUpcomingGames] = useState([]);
 
-  const apiKey = "2705c59b51ea4036bf6f6bed038c95ee";
+  const apiKey = "17bbcccaf5c34efb8a9e96f0b767c795";
 
   useEffect(() => {
     fetch(
@@ -45,47 +46,56 @@ const Home = () => {
       .then((data) => setAcclaimedGames(data))
       .catch((error) => console.error(error));
 
-      fetch(`https://api.rawg.io/api/games?key=${apiKey}&dates=${formattedToday},${formattedInSixMonths}&page_size=4&ordering=released`)
-
-        .then((res) => res.json())
-        .then((data) => setUpcomingGames(data))
-        .catch((error) => console.error(error));
+    fetch(
+      `https://api.rawg.io/api/games?key=${apiKey}&dates=${formattedToday},${formattedInSixMonths}&page_size=4&ordering=released`
+    )
+      .then((res) => res.json())
+      .then((data) => setUpcomingGames(data))
+      .catch((error) => console.error(error));
   }, []);
 
   return (
     <div className="min-h-screen">
       <Carousel />
-      <div className="flex flex-col items-center">
-        <div className="pt-4 lg:w-[1200px] sm:w-[600px] px-2 mb-4">
-          <h2 className="text-2xl font-semibold mb-2 text-white flex pb-2">
-            New Releases
-          </h2>
-          <hr className=" border-neutral-400 border-[2px] " />
-          <div className="flex flex-wrap justify-center gap-10 mt-20">
+      <div className="flex flex-col justify-start ">
+        <div className="px-2 pt-8 mb-4 mx-4">
+          <div className="flex flex-row">
+          <h1 className="text-4xl font-semibold mb-2 text-[#f4f4f4] flex pb-2 mr-3">
+            Hot Games
+          </h1>
+          <GiFlame size={36} color="orange" /></div>
+          <div
+            className="py-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 
+          max-w-sm mx-auto md:max-w-none md:mx-0"
+          >
             {games.results &&
               games.results.map((game) => {
                 return <Carddd key={game.id} game={game} />;
               })}
           </div>
         </div>
-        <div className="pt-4 lg:w-[1200px] sm:w-[600px] px-2 mb-4">
-          <h2 className="text-2xl font-semibold mb-2 text-white flex pb-2">
+        <div className="px-2 mb-4 mx-4 py-10">
+          <h1 className="text-4xl font-semibold mb-2 text-[#f4f4f4] flex pb-2">
             Critically Acclaimed
-          </h2>
-          <hr className=" border-neutral-400 border-[2px] " />
-          <div className="flex flex-wrap justify-center gap-10 mt-20">
+          </h1>
+          <div
+            className="py-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 
+          max-w-sm mx-auto md:max-w-none md:mx-0"
+          >
             {acclaimedGames.results &&
               acclaimedGames.results.map((game) => {
                 return <Carddd key={game.id} game={game} />;
               })}
           </div>
         </div>
-        <div className="pt-4 lg:w-[1200px] sm:w-[600px] px-2 mb-4">
-          <h2 className="text-2xl font-semibold mb-2 text-white flex pb-2">
+        <div className="px-2 mb-4 mx-4">
+          <h1 className="text-4xl font-semibold mb-2 text-[#f4f4f4] flex pb-2">
             Upcoming
-          </h2>
-          <hr className=" border-neutral-400 border-[2px] " />
-          <div className="flex flex-wrap justify-center gap-10 mt-20">
+          </h1>
+          <div
+            className="py-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 
+          max-w-sm mx-auto md:max-w-none md:mx-0"
+          >
             {upcomingGames.results &&
               upcomingGames.results.map((game) => {
                 return <Carddd key={game.id} game={game} />;

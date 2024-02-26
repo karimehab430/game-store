@@ -7,18 +7,23 @@ import GamePage from "./pages/GamePage";
 import GenrePage from "./pages/GenrePage";
 import FavouritesPage from "./pages/FavouritesPage";
 import Footer from "./components/footer";
+import Platforms from "./pages/Platforms";
+import PlatformPage from "./pages/PlatformPage";
 
 function App() {
   return (
-    <div className="App">
+    <div className="bg-[#151515]">
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route path="/" element={<Home />} />
           <Route path="/games/:id" element={<GamePage />} />
-          <Route path="/:gameGenre" element={<GenrePage />} />
           <Route path="/favorites" element={<FavouritesPage />} />
+          <Route path="/platforms" element={<Platforms />} />
+          <Route path="/platforms/:id" element={<PlatformPage />} />
+          <Route path="/:gameGenre" element={<GenrePage />} />
+          <Route path="/" element={<Home />} />
         </Routes>
+
         <Footer />
       </BrowserRouter>
     </div>
