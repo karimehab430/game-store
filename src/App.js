@@ -13,7 +13,7 @@ import PlatformPage from "./pages/PlatformPage";
 function App() {
   return (
     <div className="bg-[#151515]">
-      <BrowserRouter>
+      <BrowserRouter basename={process.env.PUBLIC_URL}> 
         <Navbar />
         <Routes>
           <Route path="/games/:id" element={<GamePage />} />
