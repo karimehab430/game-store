@@ -38,7 +38,7 @@ A video game store built with React, Tailwind, React Router, and Redux (for stat
 
 ![image](https://github.com/karimehab430/game-store/assets/118670911/c3b88a8c-edc2-4eef-8476-2f20bc80bdd2)
 
-![image](https://github.com/karimehab430/game-store/assets/118670911/b933e997-f37e-4481-b240-d6da860a30d5)
+![image](https://github.com/karimehab430/game-store/assets/118670911/484d4c5c-9435-43e0-b3cc-382174f919bb)
 
 
 
