@@ -22,7 +22,11 @@ A video game store built with React, Tailwind, React Router, and Redux (for stat
 
 - **Genre Pages:**
   - Explore games based on different genres.
-  - Each genre has its own dedicated page with a curated selection of games.
+  - Each genre has its own dedicated page with a selection of games.
+    
+- **Platforms:**
+  - Explore games based on different platforms.
+  - Each platform has its own dedicated page with a selection of games.
 
 - **Responsive Design:**
   - The web application is designed to work seamlessly on various devices, ensuring a consistent user experience.
