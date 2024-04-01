@@ -28,7 +28,7 @@ const Carousel = () => {
 
   useEffect(() => {
     fetch(
-      `https://api.rawg.io/api/games?key=17bbcccaf5c34efb8a9e96f0b767c795&dates=${formattedSixMonthsAgo},${formattedToday}&page_size=5&metacritic=80,100&ordering=-metacritic`
+      `https://api.rawg.io/api/games?key=17bbcccaf5c34efb8a9e96f0b767c795&dates=${formattedSixMonthsAgo},${formattedToday}&page_size=5`
     )
       .then((response) => response.json())
       .then((data) => {
