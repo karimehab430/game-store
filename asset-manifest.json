@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/game-store/static/css/main.d5ccf2bf.css",
-    "main.js": "/game-store/static/js/main.b573cf16.js",
+    "main.js": "/game-store/static/js/main.f4cc995e.js",
     "static/media/TiemposHeadline-Bold.otf": "/game-store/static/media/TiemposHeadline-Bold.c364862c47f2d8593c7d.otf",
     "index.html": "/game-store/index.html",
     "main.d5ccf2bf.css.map": "/game-store/static/css/main.d5ccf2bf.css.map",
-    "main.b573cf16.js.map": "/game-store/static/js/main.b573cf16.js.map"
+    "main.f4cc995e.js.map": "/game-store/static/js/main.f4cc995e.js.map"
   },
   "entrypoints": [
     "static/css/main.d5ccf2bf.css",
-    "static/js/main.b573cf16.js"
+    "static/js/main.f4cc995e.js"
   ]
 }
