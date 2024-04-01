@@ -33,7 +33,7 @@ const Home = () => {
 
   useEffect(() => {
     fetch(
-      `https://api.rawg.io/api/games?key=${apiKey}&dates=${formattedSixMonthsAgo},${formattedToday}&metacritic=65,100&&ordering=-released&page_size=20`
+      `https://api.rawg.io/api/games?key=${apiKey}&dates=${formattedSixMonthsAgo},${formattedToday}&page_size=20`
     )
       .then((res) => res.json())
       .then((data) => setGames(data))
