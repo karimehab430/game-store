@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div className="bg-zinc-950 text-[#f4f4f4] rounded sm:min-h-full">
+    <div className="bg-zinc-950 text-[#f4f4f4] rounded">
       <p className="text-center p-4">
         Developed by
         <a
@@ -13,7 +13,7 @@ const Footer = () => {
         >
           Karim Ehab.
         </a>
-        Copyright &copy; Restaurant App 2024. All rights reserved.
+        Copyright &copy; Game-Store App 2024. All rights reserved.
       </p>
     </div>
   );
