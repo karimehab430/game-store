@@ -7,22 +7,25 @@ const Search = ({ isExpanded, onSearchIconClick, onSearchClose }) => {
   const [searchItem, setSearchItem] = useState("");
   const [results, setResults] = useState([]);
 
-  const apiKey = "17bbcccaf5c34efb8a9e96f0b767c795";
+  const apiKey = process.env.REACT_APP_API_KEY;
 
   const handleChange = (e) => {
     setSearchItem(e.target.value);
   };
 
   useEffect(() => {
-    if (searchItem !== "") {
+    if (searchItem.length < 3) return;
+
+    const timeout = setTimeout(() => {
       fetch(
-        `https://api.rawg.io/api/games?key=${apiKey}&search=${searchItem}&page_size=5&rating=3.5,5`
+        `https://api.rawg.io/api/games?key=${apiKey}&search=${searchItem}&page_size=5`
       )
-        .then((response) => response.json())
-        .then((data) => setResults(data.results))
-        .catch((error) => console.error(error));
-    }
-  }, [searchItem]);
+        .then((res) => res.json())
+        .then((data) => setResults(data.results));
+    }, 300);
+
+    return () => clearTimeout(timeout);
+  }, [apiKey, searchItem]);
 
   return (
     <div className="relative flex items-center">
@@ -39,7 +42,7 @@ const Search = ({ isExpanded, onSearchIconClick, onSearchClose }) => {
 
       {isExpanded && (
         <div className={`relative ${isExpanded && "w-full"}`}>
-        <input
+          <input
             type="search"
             id="default-search"
             autoComplete="off"
@@ -50,9 +53,11 @@ const Search = ({ isExpanded, onSearchIconClick, onSearchClose }) => {
             onChange={handleChange}
           />
           {searchItem.length > 3 && (
-            <div className="text-[#f4f4f4] z-10 bg-[#202020] 
+            <div
+              className="text-[#f4f4f4] z-10 bg-[#202020] 
             absolute lg:top-[55px] top-[55px] left-0 lg:left-auto w-full
-             h-auto p-3 animate-openfast flex flex-col rounded">
+             h-auto p-3 animate-openfast flex flex-col rounded"
+            >
               <ul>
                 {results &&
                   results.map((game) => (

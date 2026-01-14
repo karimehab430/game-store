@@ -7,8 +7,8 @@ const FavouritesPage = () => {
 
   if (games.length === 0) {
     return (
-      <div className="flex justify-center items-center text-5xl text-[#f4f4f4] text-bold">
-        <p>Start adding games!</p>
+    <div className="min-h-screen flex justify-center items-center text-5xl text-gray-400 font-bold">
+        <p className="text-center">Start adding games!</p>
       </div>
     );
   } else {

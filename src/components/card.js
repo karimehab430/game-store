@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { add, remove } from "../redux/favoriteSlice";
@@ -6,101 +6,88 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as filledHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as unfilledHeart } from "@fortawesome/free-regular-svg-icons";
 
-const Carddd = ({ game }) => {
+const Carddd = React.memo(({ game }) => {
   const { background_image, name, id, released, genres, rating } = game;
-  const [buttonText, setButtonText] = useState("Add to Favorites");
-
-  const PathColor = (rating) => {
-    let color = "";
-    if (rating <= 5 && rating > 3.5) color = "#66FF00";
-    if (rating <= 3.5 && rating >= 3) color = "#FFFF33";
-    if (rating < 3) color = "red";
-
-    return color;
-  };
 
   const games = useSelector((state) => state.favorites.value);
   const dispatch = useDispatch();
+  const isFavorite = games.some((item) => item.id === id);
 
-  const isFavorite = games.find((item) => item.id === game.id);
+  const ratingColor = (rating) => {
+    if (rating >= 4) return "bg-green-500";
+    if (rating >= 3) return "bg-yellow-400";
+    return "bg-red-500";
+  };
 
   const handleFavorites = (e) => {
     e.preventDefault();
-    if (!isFavorite) {
-      dispatch(add(game));
-      setButtonText(" Remove from Favorites");
-    } else {
-      dispatch(remove(game));
-      setButtonText(" Add to Favorites");
-    }
+    isFavorite ? dispatch(remove(game)) : dispatch(add(game));
   };
 
-  useEffect(() => {
-    isFavorite
-      ? setButtonText(" Remove from Favorites")
-      : setButtonText(" Add to Favorites");
-  }, [isFavorite]);
-
-  const generateGenreLink = (genre) => {
-    if (genre.toLowerCase() === "rpg") {
-      return "/role-playing-games-rpg";
-    } else {
-      return `/${genre.toLowerCase()}`;
-    }
-  };
+  const generateGenreLink = (genre) =>
+    genre.toLowerCase() === "rpg"
+      ? "/role-playing-games-rpg"
+      : `/${genre.toLowerCase()}`;
 
   return (
     <Link
       to={`/games/${id}`}
-      className="border border-zinc-800 shadow-lg rounded-lg overflow-hidden hover:scale-105 z-1 hover:z-10 transition bg-[#151515]"
+      className="group relative bg-[#151515] rounded-xl overflow-hidden 
+                 shadow-md hover:shadow-xl transition-all duration-300"
     >
-      <img
-        className="rounded-lg w-full h-44 object-cover "
-        alt="game-thumbnail"
-        src={background_image}
-      />
-      <div className="space-y-4 p-3 w-full">
-        <h2 className="font-bold flex justify-center items-center text-2xl pt-2 text-[#f4f4f4] hover:text-[#f4f4f4]/50">
+      <div className="relative">
+        <img
+          src={background_image}
+          alt={name}
+          loading="lazy"
+          className="h-48 w-full object-cover group-hover:scale-105 transition-transform duration-300"
+        />
+
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+
+        <span
+          className={`absolute bottom-3 left-3 px-2 py-1 text-xs font-semibold text-black rounded ${ratingColor(
+            rating
+          )}`}
+        >
+          ⭐ {rating}
+        </span>
+
+        <button
+          onClick={handleFavorites}
+          className="absolute top-3 right-3 bg-black/60 backdrop-blur 
+                     p-2 rounded-full text-white hover:scale-110 transition"
+        >
+          <FontAwesomeIcon
+            icon={isFavorite ? filledHeart : unfilledHeart}
+            className={isFavorite ? "text-red-500" : ""}
+          />
+        </button>
+      </div>
+
+      <div className="p-4 space-y-2">
+        <h2 className="text-lg font-bold text-[#f4f4f4] line-clamp-2">
           {name}
         </h2>
-        <div className="text-yellow-500 flex flex-start">
-          <h4 className="mx-1 font-medium text-[#f4f4f4]">Release Date:</h4>
-          <span className="text-yellow-500 font-semibold">{released}</span>
-        </div>
-        <div className="text-[#f4f4f4] flex flex-start">
-          <h4 className="mx-1 font-medium">Genres:</h4>
-          {genres &&
-          genres.map((genre, index) => (
-            <div key={genre.id}>
-              {index > 0 && ", "}
-              <Link to={generateGenreLink(genre.name)} className=" hover:underline">{genre.name}</Link>
-            </div>
-          ))}
-        </div>
-        <div className="text-[#f4f4f4] flex flex-start">
-          <h4 className="mx-2 font-medium">Rating:</h4>
-          <span className="font-semibold" style={{ color: PathColor(rating) }}>{rating}</span>
-        </div>
 
-        <div className="flex flex-col items-center justify-center gap-4">
-          <button
-            className="text-[#f4f4f4] font-medium px-5 py-2 mb-3 bg-red-500 
-            transition-all rounded-md hover:bg-red-600"
-            type="button"
-            data-ripple-light="true"
-            onClick={handleFavorites}
-          >
-            {isFavorite ? (
-              <FontAwesomeIcon icon={filledHeart} />
-            ) : (
-              <FontAwesomeIcon icon={unfilledHeart} />
-            )}
-            {buttonText}
-          </button>
+        <p className="text-sm text-gray-400">
+          Released: <span className="text-gray-200">{released}</span>
+        </p>
+
+        <div className="flex flex-wrap gap-2 text-sm">
+          {genres?.slice(0, 3).map((genre) => (
+            <Link
+              key={genre.id}
+              to={generateGenreLink(genre.name)}
+              className="px-2 py-1 bg-zinc-800 text-gray-200 rounded-md hover:bg-zinc-700 transition"
+            >
+              {genre.name}
+            </Link>
+          ))}
         </div>
       </div>
     </Link>
   );
-};
+});
 
 export default Carddd;

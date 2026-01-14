@@ -1,22 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import Carddd from "../components/card";
-
+import { useQuery } from "@tanstack/react-query";
+import LoadingSpinner from "../components/LoadingSpinner";
 const GenrePage = () => {
   const { gameGenre } = useParams();
-  const [games, setGames] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const apiKey = process.env.REACT_APP_API_KEY;
 
-  const apiKey = "17bbcccaf5c34efb8a9e96f0b767c795";
+  const fetchGenre = async (genre, page) => {
+    const res = await fetch(
+      `https://api.rawg.io/api/games?key=${apiKey}&genres=${genre}&page=${page}`
+    );
+    if (!res.ok) throw new Error("Failed to fetch games");
 
-  useEffect(() => {
-    fetch(
-      `https://api.rawg.io/api/games?key=${apiKey}&genres=${gameGenre}&page=${currentPage}`
-    )
-      .then((response) => response.json())
-      .then((data) => setGames(data))
-      .catch((error) => console.error(error));
-  }, [gameGenre, currentPage]);
+    return res.json();
+  };
+  const {
+    data: games,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["games-by-genre", gameGenre, currentPage],
+    queryFn: () => fetchGenre(gameGenre, currentPage),
+    keepPreviousData: true,
+  });
 
   const handleNextPage = () => {
     setCurrentPage((prevPage) => prevPage + 1);
@@ -28,9 +36,27 @@ const GenrePage = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <LoadingSpinner size="w-16 h-16" />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-white">
+        Error loading games.
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen pt-24 mx-5">
-      <h1 className="text-[#f4f4f4] font-bold text-4xl capitalize">{gameGenre}</h1>
+      <h1 className="text-[#f4f4f4] font-bold text-4xl capitalize">
+        {gameGenre}
+      </h1>
       <div
         className="py-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 
           max-w-sm mx-auto md:max-w-none md:mx-0"
